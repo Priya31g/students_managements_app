@@ -4,7 +4,7 @@ const contestScema=new mongoose.Schema({
     day:{type:String,required:true},
     title:{type:String,required:true},
     type:{type:String,required:true},
-    deadline:{type:Date,required:true},
+    deadline:{type:String,required:true},
     tags:[{type:String,required:true}],
     time :{type:String,required:true}
     

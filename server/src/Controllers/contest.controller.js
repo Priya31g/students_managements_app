@@ -17,7 +17,7 @@ router.get("/sort_type",async (req,res)=>{
     const page = +req.query.page||1;
     const size = +req.query.size||5;
     const offset = (page-1)*5;
-    const con = await contest.find({type:req.query}).skip(offset).limit(size).lean().exec();
+    const con = await contest.find({type:req.query.type}).skip(offset).limit(size).lean().exec();
     res.send(con);
 })
 
@@ -51,8 +51,13 @@ async (req,res)=>{
     res.send(con);
 })
 
-router.get("",async(req,res)=>{
+router.get("/:id",async(req,res)=>{
     const con = await contest.findById(req.params.id);
+    res.send(con);
+})
+
+router.patch("/:id",async(req,res)=>{
+    const con = await contest.findByIdAndUpdate(req.params.id,req.body,{new:true});
     res.send(con);
 })
 
