@@ -31,7 +31,7 @@ body("title").notEmpty().withMessage("title is required"),
 body("type").notEmpty().withMessage("type is required"),
 body("deadline").notEmpty().withMessage("deadline is required"),
 body("time").notEmpty().withMessage("sorry! time is required"),
-
+body("day").notEmpty().withMessage("sorry! day is required"),
 async (req,res)=>{
     const errors = validationResult(req);
         let final_error=null;
