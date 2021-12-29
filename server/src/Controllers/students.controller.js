@@ -16,11 +16,24 @@ router.get("",async function(req,res){
  
      
        
-    return res.send({stud,total_pages});
+    return res.send({students:stud,total_pages});
  });
 
-router.get("/:id",async(req,res)=>{
-    const stud =  await students.findById(req.params.id);
+ router.get("/sort_student_age",async (req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    
+    let stud = await students.find().sort({age:1}).skip(offset).limit(size).lean().exec();
+    res.send(stud);
+})
+
+router.get("/sort_student_name",async (req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    
+    let stud = await students.find().sort({name:1}).skip(offset).limit(size).lean().exec();
     res.send(stud);
 })
 
@@ -51,12 +64,8 @@ async (req,res)=>{
     res.send(stud);
 })
 
-router.get("/sort_student",async (req,res)=>{
-    const page = +req.query.page||1;
-    const size = +req.query.size||5;
-    const offset = (page-1)*5;
-    let q = req.query;
-    let stud = await students.find().sort({q:1}).skip(offset).limit(size).lean().exec();
+router.get("/:id",async(req,res)=>{
+    const stud =  await students.findById(req.params.id);
     res.send(stud);
 })
 

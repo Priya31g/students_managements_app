@@ -1,0 +1,22 @@
+#contest{
+    text-align: center;
+    margin: 2% 30%;
+    height: 10%;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: cursive;
+}
+
+.account{
+    margin-left: 55%;
+   float: right;
+   cursor: pointer;
+}
+
+.icon{
+    height: 15%;
+    width: 15%;
+    margin: 1% 3%;
+}
+
+
