@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cors = require('cors')
 const passport= require("../config/passport");
 const connect = require("../config/db");
 const contestController = require("./Controllers/contest.controller");
@@ -16,7 +16,7 @@ const admin = require("./models/admin.model")
 const {signin,signup} =require("./Controllers/authcontroller");
 
 app.use(passport.initialize());
-
+app.use(cors())
 passport.serializeUser(function({user,token},done){
     done(null,{user,token})
 })

@@ -61,6 +61,7 @@ async (req,res)=>{
         }
         console.log(final_error)
     const stud= await students.create(req.body);
+    console.log(stud)
     res.send(stud);
 })
 

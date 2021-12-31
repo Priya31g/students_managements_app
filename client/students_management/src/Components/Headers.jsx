@@ -1,5 +1,4 @@
 import "./Headers.css";
-import {useState} from "react";
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,6 +20,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { useHistory } from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -74,11 +74,11 @@ const sideNavData =[{
     id:0,
     title :"Student List",
     src:"https://cdn-icons-png.flaticon.com/512/3050/3050482.png",
-    components:""
+    components:"/studentlist"
 },{id:1,
     title:"Add Student",
     src:"https://cdn-icons-png.flaticon.com/512/1665/1665731.png",
-    components:""
+    components:"/addstudent"
 }]
 
 export default function PersistentDrawerLeft() {
@@ -93,6 +93,7 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+  const history = useHistory();
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -112,7 +113,9 @@ export default function PersistentDrawerLeft() {
           </Typography>
 
           <Typography variant="h6"  component="div">
-          <span id="contest">Contest</span>
+          <span id="contest" onClick={()=>{
+            history.push("/")
+          }}>Contest</span>
           </Typography>
 
             <>
@@ -123,7 +126,12 @@ export default function PersistentDrawerLeft() {
              <Avatar src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"{...bindTrigger(popupState)} className="account"/>
           
           <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={popupState.close}>Sign In</MenuItem>
+            <MenuItem onClick={()=>{
+             
+              history.push("/signIn");
+             
+
+            }}>Sign In</MenuItem>
             <MenuItem onClick={popupState.close}>Sign Up</MenuItem>
             {/* <MenuItem onClick={popupState.close}>Logout</MenuItem> */}
           </Menu>
@@ -155,8 +163,10 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {sideNavData.map((el, index) => (
-            <ListItem button key={el.id}>
+          {sideNavData.map((el) => (
+            <ListItem button key={el.id} onClick={()=>
+                history.push(el.components)
+            }>
               
                 
                 <img src={el.src} alt="student_list" className="icon"/>
@@ -181,20 +191,3 @@ export default function PersistentDrawerLeft() {
   );
 }
 
-
-// function Headers(){
-
-
-//     return (
-//         <div className="headers">
-//             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14srBumsgHaVUnkPD65P7sZOBhSRIYDwlvJ0SK1m7C_Mtv7CwEKcUOk1iM63A3oqQ4dg&usqp=CAU" alt="headers" width="10%" height="10%" />
-//             <div>
-//                 <span>Contest</span>
-//                 <img src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"alt="account_logo" />
-                
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default Headers;

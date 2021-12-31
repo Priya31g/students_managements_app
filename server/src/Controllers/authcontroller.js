@@ -31,7 +31,7 @@ const signin =async (req,res)=>{
     try{
     
         let user = await admin.findOne({email:req.body.email});
-        if(! user)    return res.status(401).send({message: "Plese check email or password"});
+        if(! user)    return res.status(401).send({message: "Please check email or password"});
         console.log(user)
         // let match=user.checkPassword(req.body.password);
         // if(! match){
