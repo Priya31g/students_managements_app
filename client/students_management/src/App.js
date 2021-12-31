@@ -6,9 +6,10 @@ import Contest from './Components/Contest';
 import { AddStudents } from './Components/AddStudents';
 import { Students } from './Components/StudentsList';
 import { SignIn } from './Components/SignIn';
+import { Signup } from './Components/Signup';
 
 if(!localStorage.getItem("b_token")){
-  localStorage.setItem("b_token",JSON.stringify(""));
+  localStorage.setItem("b_token",JSON.stringify(null));
 }
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route exact  path="/signIn">
         <SignIn />
+        </Route>
+        <Route exact  path="/signup">
+        <Signup />
         </Route>
       </Switch>
     </div>

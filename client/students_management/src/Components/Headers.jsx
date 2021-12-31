@@ -124,17 +124,22 @@ export default function PersistentDrawerLeft() {
       {(popupState) => (
         <React.Fragment>
              <Avatar src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"{...bindTrigger(popupState)} className="account"/>
-          
-          <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={()=>{
-             
-              history.push("/signIn");
-             
+            <Menu {...bindMenu(popupState)}>
 
-            }}>Sign In</MenuItem>
-            <MenuItem onClick={popupState.close}>Sign Up</MenuItem>
-            {/* <MenuItem onClick={popupState.close}>Logout</MenuItem> */}
-          </Menu>
+           
+            <MenuItem onClick={()=>{
+              popupState.close();
+              history.push("/signIn");}}>
+              Sign In</MenuItem>
+              <MenuItem onClick={()=>{
+                popupState.close();
+                history.push("/signup");}}>Sign Up</MenuItem>
+              <MenuItem onClick={()=>{
+                popupState.close();
+                localStorage.setItem("b_token",null)
+              }}>Logout</MenuItem> 
+            </Menu>
+          
         </React.Fragment>
       )}
     </PopupState>

@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import {Redirect} from "react-router-dom";
+
 
 export const AddStudents =()=>{
     const [name,setName] = useState("");
@@ -14,6 +16,7 @@ export const AddStudents =()=>{
     const [education,seteducation] = useState("");
     const [contact,setcontact] = useState("");
     const [gender,setgender] = useState("Female");
+   const token = JSON.parse(localStorage.getItem("b_token"))
     const handleSubmit =async ()=>{
         if(name===""||city===""||age===""||gender===""||education===""||contact===""){
         alert("Fill all data Correctly")
@@ -30,7 +33,7 @@ export const AddStudents =()=>{
          console.log(body_p);
          try{
 
-            let token = JSON.parse(localStorage.getItem("b_token"))
+           
             fetch("http://localhost:2020/students",{
                 method: "POST",
                body: JSON.stringify(body_p),
@@ -58,6 +61,12 @@ export const AddStudents =()=>{
 
     }
        
+    }
+    if(token===""||token===null){
+        return  <>
+        <h2>Needs To Sign Up First</h2>
+        <Redirect to="/signup" />
+        </>
     }
 
     return (

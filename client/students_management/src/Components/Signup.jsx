@@ -4,11 +4,11 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
-if(localStorage.getItem("b_token")==null){
-    localStorage.setItem("b_token","");
-}
-export const SignIn = ()=>{
+import { useHistory } from 'react-router-dom';
+
+export const Signup = ()=>{
     const [email,setEmail] = useState("");
+    const history = useHistory();
     const handleSignin=async ()=>{
             try{
                 if(email===""){
@@ -17,7 +17,7 @@ export const SignIn = ()=>{
                     let b ={
                         email : email
                      }
-                    fetch("http://localhost:2020/signin",{
+                    fetch("http://localhost:2020/signup",{
                         method: "POST",
                        body: JSON.stringify(b),
                         headers: {
@@ -28,9 +28,10 @@ export const SignIn = ()=>{
                         }
                     }).then(response => response.json())
                     .then(json => {console.log(json);
-                        if(json.token){
-                        alert(`Successfully signed In`);
-                        localStorage.setItem("b_token",JSON.stringify(json.token));}})                         
+                        alert(`Successfully signed Up! 
+                            Please Sign In with Same Email to continue.`);
+                        history.push("/signIn")
+                        ;})                         
                     .catch((err)=>{
                         alert(`Ooops! Something Went Wrong!😑
                            `)
@@ -44,7 +45,6 @@ export const SignIn = ()=>{
                   
             }catch(err){
                 console.log(err);
-                alert(`Ooops! Something Went Wrong!😑`)
             }
     }
 
@@ -52,13 +52,13 @@ export const SignIn = ()=>{
         <>
             <Card sx={{ maxWidth: 275,margin:"4% 35%" }}>
             <Typography sx={{ fontSize: 25,textAlign:"center", }} color="tomato" gutterBottom>
-                 Sign In
+                 Sign Up
             </Typography>
 
 
             <TextField onChange={(e)=>{setEmail(e.target.value)}} label={'Email'} id="margin-none" sx={{ fontSize: 25,textAlign:"center",margin:"4% 15%" }} />
 
-            <Button variant="outlined" onClick={()=>{handleSignin()}} sx={{ textAlign:"center",margin:"4% 26%" }}>Sign In</Button>
+            <Button variant="outlined" onClick={()=>{handleSignin()}} sx={{ textAlign:"center",margin:"4% 26%" }}>Sign Up</Button>
             </Card>
         
         </>

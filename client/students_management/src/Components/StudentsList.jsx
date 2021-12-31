@@ -9,7 +9,12 @@ import { useEffect } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
+import {Redirect} from "react-router-dom";
+
+import InputLabel from '@mui/material/InputLabel';
+
  const Students = ()=>{
+   
     const [s_data,setData] = useState([]);
     const [page,setPage] = useState(1)
     const [loading ,setLoading] = useState(true);
@@ -27,14 +32,19 @@ import Button from '@mui/material/Button';
 
       }
 
-
+     const token = (localStorage.getItem("b_token"));
     const getData =async (url)=>{
      
       try{
-        let token = JSON.parse(localStorage.getItem("b_token"))
+        if((token)===undefined||(token)===null){
+          alert(`Needs to sign up first`);
+          return;
+        }
+       
+       
         let {data} = await axios.get(url,{
           header:{
-            Authorization:`Bearer ${token}`
+            Authorization:`Bearer ${JSON.parse(token)}`
           }
          
         });
@@ -43,7 +53,8 @@ import Button from '@mui/material/Button';
           console.log(s_data)
 
       }catch(err){
-          console.log("err",err)
+          console.log("err",err);
+          alert(`something went wrong`);
       }finally{
         setLoading(false);
       }
@@ -55,11 +66,20 @@ import Button from '@mui/material/Button';
         getData(`http://localhost:2020/students?page=${page}`);
         setPage(1);
     },[loading])
+    if((token)===undefined||(token)===null){
 
+     
+        return  <>
+        <h2>Needs To Sign Up First</h2>
+        <Redirect to="/signup" />
+        </>
+    }
+    
 
     return (
         <>
         {loading?<h3>Loading ...</h3>: <List sx={{ width: '80%',  bgcolor: '#D6E5FA',margin:"2% 10%",padding:"5%",boxShadow:"1px 1px 1px 1px" }}>
+      
                {s_data.students.map((el)=>{
                       return   <ListItem alignItems="flex-start" key={el._id}>
         
