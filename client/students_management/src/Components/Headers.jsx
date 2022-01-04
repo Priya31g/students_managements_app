@@ -77,12 +77,12 @@ const sideNavData =[{
     components:"/studentlist"
 },{id:1,
     title:"Add Student",
-    src:"https://cdn-icons-png.flaticon.com/512/1665/1665731.png",
+    src:"https://cdn-icons-png.flaticon.com/512/2583/2583145.png",
     components:"/addstudent"
 },{
   id:2,
   title:"Add Contest",
-  src:"https://cdn-icons.flaticon.com/png/512/1149/premium/1149576.png?token=exp=1641241315~hmac=bfd0eb972af86ceafdebec8db4faeb16",
+  src:"https://cdn-icons-png.flaticon.com/512/2921/2921226.png",
   components:"/addcontest"
 }]
 

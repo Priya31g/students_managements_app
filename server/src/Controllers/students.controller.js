@@ -51,7 +51,7 @@ router.get("/filter_age",async (req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     
-    const con = await students.find({Age:req.query.age}).skip(offset).limit(size).lean().exec();
+    const con = await students.find({age:req.query.age}).skip(offset).limit(size).lean().exec();
     res.send(con);
 })
 

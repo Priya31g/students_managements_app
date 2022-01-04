@@ -15,6 +15,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
  const Students = ()=>{
+   console.log("refreshing")
     const [filter_q,setFilter_q] = useState("");
     const [filter_v,setFilter_v] = useState("");
     const [s_data,setData] = useState([]);
@@ -37,21 +38,46 @@ import MenuItem from '@mui/material/MenuItem';
      const token = (localStorage.getItem("b_token"));
 
     const findData = async () =>{
-      console.log(filter_q,filter_v)
+      console.log(filter_q,filter_v);
+     
       try{
-        if(filter_q=="Age"){
-            getData(`http://localhost:2020/students/filter_age?Age=${filter_v}`)
+        if(filter_q==="Age"){
+           
+            let data = await axios.get(`http://localhost:2020/students/filter_age?age=${filter_v}`,{
+              header:{
+                Authorization:`Bearer ${JSON.parse(token)}`
+              }
+             
+            });
+            
+
+            console.log(data);
+            setData(data.data);
         }else{
+         
+          let data = await axios.get(`http://localhost:2020/students/filter_name?name=${filter_v}`,{
+              header:{
+                Authorization:`Bearer ${JSON.parse(token)}`
+              }
+             
+            });
+            //let x =data;
+            console.log(data.data);
+            setData(data.data);
+           // console.log(s_data)
           
-          getData(`http://localhost:2020/students/filter_name?name=${filter_v}`)
         }
       }catch(err){
+        
           console.log(err);
+      }finally{
+        console.log(s_data);
+        
       }
     }
 
 
-    const getData =async (url)=>{
+    const getData =async ()=>{
      
       try{
         if((token)===undefined||(token)===null){
@@ -60,16 +86,16 @@ import MenuItem from '@mui/material/MenuItem';
         }
        
        
-        let {data} = await axios.get(url,{
+        let {data} = await axios.get(`http://localhost:2020/students?page=${page}`,{
           header:{
             Authorization:`Bearer ${JSON.parse(token)}`
           }
          
         });
-        console.log(data);
+       // console.log(data);
         setData(data);
         setLoading(false);
-          console.log(s_data)
+       //   console.log(s_data)
 
       }catch(err){
           console.log("err",err);
@@ -82,19 +108,20 @@ import MenuItem from '@mui/material/MenuItem';
        
 
     }
+ 
     useEffect(()=>{
-        getData(`http://localhost:2020/students?page=${page}`);
-        setPage(1);
-    },[loading])
+        getData();
+     
+    },[])
+   
     if((token)===undefined||(token)===null){
 
      
-        return  <>
-        <h2>Needs To Sign Up First</h2>
-        <Redirect to="/signup" />
-        </>
-    }
-    
+      return  <>
+      <h2>Needs To Sign Up First</h2>
+      {/* <Redirect to="/signup" /> */}
+      </>
+  }
 
     return (
         <>
@@ -105,6 +132,7 @@ import MenuItem from '@mui/material/MenuItem';
                           sx={{fontSize:"25px"}}
                             component="h2"
                             variant="body2"
+                            minWidth="110px"
                             color="text.primary"
                           >
                             Filter By :
@@ -118,7 +146,7 @@ import MenuItem from '@mui/material/MenuItem';
           label="Query"
           placeholder="Query"
           sx={{       minWidth:"200px",
-                     margin:"0% 15%",
+                     margin:"0% 5%",
                      padding:"15px",
                      alignSelf:"center"
                    
