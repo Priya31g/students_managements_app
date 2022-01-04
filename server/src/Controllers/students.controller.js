@@ -37,6 +37,25 @@ router.get("/sort_student_name",async (req,res)=>{
     res.send(stud);
 })
 
+router.get("/filter_name",async (req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    const con = await students.find({name:req.query.name}).skip(offset).limit(size).lean().exec();
+    res.send(con);
+})
+
+
+router.get("/filter_age",async (req,res)=>{
+    const page = +req.query.page||1;
+    const size = +req.query.size||5;
+    const offset = (page-1)*5;
+    
+    const con = await students.find({Age:req.query.age}).skip(offset).limit(size).lean().exec();
+    res.send(con);
+})
+
+
 router.post("",authenticate,
 body("name").notEmpty().withMessage("name is required"),
 body("city").notEmpty().withMessage("city is required"),

@@ -13,6 +13,8 @@ router.get("",async (req,res)=>{
     res.send(con);
 })
 
+
+
 router.get("/sort_type",async (req,res)=>{
     const page = +req.query.page||1;
     const size = +req.query.size||5;

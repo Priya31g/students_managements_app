@@ -7,6 +7,7 @@ import { AddStudents } from './Components/AddStudents';
 import { Students } from './Components/StudentsList';
 import { SignIn } from './Components/SignIn';
 import { Signup } from './Components/Signup';
+import { AddContest } from './Components/AddContest';
 
 if(!localStorage.getItem("b_token")){
   localStorage.setItem("b_token",JSON.stringify(null));
@@ -32,6 +33,9 @@ function App() {
         </Route>
         <Route exact  path="/signup">
         <Signup />
+        </Route>
+        <Route exact  path="/addcontest">
+        <AddContest />
         </Route>
       </Switch>
     </div>

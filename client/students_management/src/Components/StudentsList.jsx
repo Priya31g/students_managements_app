@@ -10,11 +10,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import {Redirect} from "react-router-dom";
-
-import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
  const Students = ()=>{
-   
+    const [filter_q,setFilter_q] = useState("");
+    const [filter_v,setFilter_v] = useState("");
     const [s_data,setData] = useState([]);
     const [page,setPage] = useState(1)
     const [loading ,setLoading] = useState(true);
@@ -33,6 +35,22 @@ import InputLabel from '@mui/material/InputLabel';
       }
 
      const token = (localStorage.getItem("b_token"));
+
+    const findData = async () =>{
+      console.log(filter_q,filter_v)
+      try{
+        if(filter_q=="Age"){
+            getData(`http://localhost:2020/students/filter_age?Age=${filter_v}`)
+        }else{
+          
+          getData(`http://localhost:2020/students/filter_name?name=${filter_v}`)
+        }
+      }catch(err){
+          console.log(err);
+      }
+    }
+
+
     const getData =async (url)=>{
      
       try{
@@ -50,13 +68,15 @@ import InputLabel from '@mui/material/InputLabel';
         });
         console.log(data);
         setData(data);
+        setLoading(false);
           console.log(s_data)
 
       }catch(err){
           console.log("err",err);
+          setLoading(false);
           alert(`something went wrong`);
       }finally{
-        setLoading(false);
+       // setLoading(false);
       }
         
        
@@ -79,8 +99,58 @@ import InputLabel from '@mui/material/InputLabel';
     return (
         <>
         {loading?<h3>Loading ...</h3>: <List sx={{ width: '80%',  bgcolor: '#D6E5FA',margin:"2% 10%",padding:"5%",boxShadow:"1px 1px 1px 1px" }}>
+
+          <ListItem alignItems="flex-start" >
+          <Typography
+                          sx={{fontSize:"25px"}}
+                            component="h2"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            Filter By :
+                          </Typography>
+            <Select
+          value={filter_q}
+          onChange={(e)=>{
+           
+            setFilter_q(e.target.value);}}
+          autoWidth
+          label="Query"
+          placeholder="Query"
+          sx={{       minWidth:"200px",
+                     margin:"0% 15%",
+                     padding:"15px",
+                     alignSelf:"center"
+                   
+                  }}
+        >
+          <MenuItem  sx={{       minWidth:"175px",
+                    
+                     alignSelf:"center"
+                   
+                  }} value="name">Name</MenuItem>
+          <MenuItem  sx={{       minWidth:"200px",
+                    
+                     alignSelf:"center"
+                   
+                  }} value="Age">Age</MenuItem>
+        </Select>
+        <TextField sx={{width:"85%",
+                     margin:"2% 10%",
+                     padding:"15px",
+                     alignSelf:"center"
+                   
+                  }}
+          required
+          id="outlined-required"
+          label="Value" placeholder="Value" onChange={(e)=>{
+                            setFilter_v(e.target.value)
+                        }} />
+
+          <Button onClick={findData}>Find</Button>
+          </ListItem>
       
-               {s_data.students.map((el)=>{
+               {s_data.students ? s_data.students.map((el)=>{
                       return   <ListItem alignItems="flex-start" key={el._id}>
         
                          <ListItemText
@@ -125,7 +195,16 @@ import InputLabel from '@mui/material/InputLabel';
                           </IconButton>
                       </ListItem>
                     
-                })} 
+               }):<ListItem>
+                  <Typography
+                                 sx={{ display: 'inline',fontSize:"16px" }}
+                                 component="span"
+                                 variant="body2"
+                                 color="text.primary"
+                               >
+                               Oops! No Data Found
+                               </Typography>
+                 </ListItem>} 
          <div style={{justifyContent:"space-evenly",display:"flex"}}>
         
         <Button variant="outlined" color="secondary" disabled={page===1} onClick={()=>{
