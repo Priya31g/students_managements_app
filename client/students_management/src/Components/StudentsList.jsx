@@ -20,7 +20,7 @@ import MenuItem from '@mui/material/MenuItem';
     const [filter_v,setFilter_v] = useState("");
     const [s_data,setData] = useState([]);
     const [page,setPage] = useState(1)
-    const [loading ,setLoading] = useState(true);
+    const [loading ,setLoading] = useState(false);
 
       const handleDelete = async (id)=>{
           try{
@@ -51,7 +51,7 @@ import MenuItem from '@mui/material/MenuItem';
             });
             
 
-            console.log(data);
+            console.log(data.data);
             setData(data.data);
         }else{
          
@@ -92,26 +92,23 @@ import MenuItem from '@mui/material/MenuItem';
           }
          
         });
-       // console.log(data);
-        setData(data);
-        setLoading(false);
-       //   console.log(s_data)
+          console.log(data);
+          setData(data);
+       // setLoading(false);
+         console.log(s_data)
 
       }catch(err){
           console.log("err",err);
-          setLoading(false);
+         // setLoading(false);
           alert(`something went wrong`);
       }finally{
        // setLoading(false);
       }
-        
-       
-
+     
     }
  
-    useEffect(()=>{
-        getData();
-     
+    useEffect( ()=>{
+      getData();
     },[])
    
     if((token)===undefined||(token)===null){
@@ -119,7 +116,7 @@ import MenuItem from '@mui/material/MenuItem';
      
       return  <>
       <h2>Needs To Sign Up First</h2>
-      {/* <Redirect to="/signup" /> */}
+        <Redirect to="/signup" /> 
       </>
   }
 
@@ -175,10 +172,10 @@ import MenuItem from '@mui/material/MenuItem';
                             setFilter_v(e.target.value)
                         }} />
 
-          <Button onClick={findData}>Find</Button>
+          <Button onClick={()=>{findData()}}>Find</Button>
           </ListItem>
       
-               {s_data.students ? s_data.students.map((el)=>{
+               {s_data.students && s_data.students.map((el)=>{
                       return   <ListItem alignItems="flex-start" key={el._id}>
         
                          <ListItemText
@@ -223,16 +220,7 @@ import MenuItem from '@mui/material/MenuItem';
                           </IconButton>
                       </ListItem>
                     
-               }):<ListItem>
-                  <Typography
-                                 sx={{ display: 'inline',fontSize:"16px" }}
-                                 component="span"
-                                 variant="body2"
-                                 color="text.primary"
-                               >
-                               Oops! No Data Found
-                               </Typography>
-                 </ListItem>} 
+               })} 
          <div style={{justifyContent:"space-evenly",display:"flex"}}>
         
         <Button variant="outlined" color="secondary" disabled={page===1} onClick={()=>{
