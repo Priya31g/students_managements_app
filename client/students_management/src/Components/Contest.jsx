@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 function Contest(){
     const  [page,setpage] = useState(1);
- 
+    const [size,setSize] = useState(1);
     const  [data,setData] = useState([]);
     const filteredData =async (t)=>{
       //  settype(e.target.value);
@@ -29,7 +29,8 @@ function Contest(){
     const getData =async (url)=>{
         let {data} = await axios.get(url);
 
-       // console.log(data);
+        console.log(data);
+        
             setData(data);
 
     }
@@ -53,7 +54,7 @@ function Contest(){
         onClick={sortedDataSet}
         >Sort By Deadline</InputLabel>
       </div>
-        {data.map((el)=>{
+        {data.con && data.con.map((el)=>{
             return  <CardContent key={el._id} sx={{ margin:"2% 25%",borderRadius:"10px",boxShadow:"1px 2px 2px 2px",width:"50%" }}>
                   <Typography sx={{ fontSize: 35,textAlign:"center" }} color="text.primary" gutterBottom>
                  {el.day}
@@ -95,7 +96,7 @@ function Contest(){
             }}>
                 Prev
             </Button>
-            <Button variant="contained" color="success" disabled={page===2} onClick={()=>{
+            <Button variant="contained" color="success" disabled={page===data.total_pages} onClick={()=>{
                 setpage(page+1);
             }}>
         Next

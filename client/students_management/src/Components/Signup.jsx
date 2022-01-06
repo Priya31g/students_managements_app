@@ -50,15 +50,15 @@ export const Signup = ()=>{
 
     return (
         <>
-            <Card sx={{ maxWidth: 275,margin:"4% 35%" }}>
-            <Typography sx={{ fontSize: 25,textAlign:"center", }} color="tomato" gutterBottom>
-                 Sign Up
+            <Card sx={{ minWidth: 275,margin:"4% 35%" }}>
+            <Typography sx={{ fontSize: 25,textAlign:"center",margin:"4% 5%",width:"90%" }} color="#0F044C" gutterBottom>
+                 Sign Up with Masai Email Id
             </Typography>
 
 
-            <TextField onChange={(e)=>{setEmail(e.target.value)}} label={'Email'} id="margin-none" sx={{ fontSize: 25,textAlign:"center",margin:"4% 15%" }} />
+            <TextField onChange={(e)=>{setEmail(e.target.value)}} label={'Email'} id="margin-none" sx={{ fontSize: 25,textAlign:"center",margin:"4% 5%",width:"90%" }} />
 
-            <Button variant="outlined" onClick={()=>{handleSignin()}} sx={{ textAlign:"center",margin:"4% 26%" }}>Sign Up</Button>
+            <Button variant="outlined" onClick={()=>{handleSignin()}} sx={{ textAlign:"center",margin:"4% 5%",width:"90%" }}>Sign Up</Button>
             </Card>
         
         </>

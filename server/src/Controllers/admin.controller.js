@@ -26,7 +26,7 @@ async (req,res)=>{
         let ad = await admin.create(req.body);
         res.send(ad);
     }else{
-        res.send({error:"Oops! sorry you can't login email."})
+        res.send({error:"Oops! sorry you can't login email.You need Masai Email Id to Login in to Admin Panel"})
     }
 
 })

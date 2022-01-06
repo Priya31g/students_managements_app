@@ -10,7 +10,10 @@ router.get("",async (req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     const con = await contest.find().skip(offset).limit(size).lean().exec();
-    res.send(con);
+    const totalUserCount = await contest.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+    res.send({con,total_pages});
 })
 
 
@@ -20,7 +23,10 @@ router.get("/sort_type",async (req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     const con = await contest.find({type:req.query.type}).skip(offset).limit(size).lean().exec();
-    res.send(con);
+    const totalUserCount = await contest.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+    res.send({con,total_pages});
 })
 
 router.get("/sort_deadline",async (req,res)=>{
@@ -28,7 +34,10 @@ router.get("/sort_deadline",async (req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     const con = await contest.find().skip(offset).sort({deadline:1}).lean().exec();
-    res.send(con);
+    const totalUserCount = await contest.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+    res.send({con,total_pages});
 })
 
 router.post("",

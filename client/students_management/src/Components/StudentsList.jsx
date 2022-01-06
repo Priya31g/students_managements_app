@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
  const Students = ()=>{
-   console.log("refreshing")
+   
     const [filter_q,setFilter_q] = useState("");
     const [filter_v,setFilter_v] = useState("");
     const [s_data,setData] = useState([]);
@@ -26,7 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
           try{
               let data = await axios.delete(`http://localhost:2020/students/${id}`);
 
-              console.log(data);
+             // console.log(data);
               alert(`Successfully Deleted`);
               getData(`http://localhost:2020/students?page=${page}`)
           }catch(err){
@@ -51,8 +51,12 @@ import MenuItem from '@mui/material/MenuItem';
             });
             
 
-            console.log(data.data);
-            setData(data.data);
+           // console.log(data.data);
+            setData(await data.data);
+            // let d = s_data.filter((el)=>{
+            //   return (el.age===filter_v)
+            // })
+            // console.log(d);
         }else{
          
           let data = await axios.get(`http://localhost:2020/students/filter_name?name=${filter_v}`,{
@@ -62,23 +66,23 @@ import MenuItem from '@mui/material/MenuItem';
              
             });
             //let x =data;
-            console.log(data.data);
+           // console.log(data.data);
             setData(data.data);
            // console.log(s_data)
           
         }
       }catch(err){
         
-          console.log(err);
+          //console.log(err);
       }finally{
-        console.log(s_data);
+        //console.log(s_data);
         
       }
     }
 
 
     const getData =async ()=>{
-     
+    
       try{
         if((token)===undefined||(token)===null){
           alert(`Needs to sign up first`);
@@ -92,24 +96,29 @@ import MenuItem from '@mui/material/MenuItem';
           }
          
         });
-          console.log(data);
+      
+        // console.log(data);
           setData(data);
-       // setLoading(false);
-         console.log(s_data)
+          //setLoading(false);
+          
+          //  console.log(s_data)
+          
+        
 
       }catch(err){
-          console.log("err",err);
+         // console.log("err",err);
          // setLoading(false);
           alert(`something went wrong`);
-      }finally{
-       // setLoading(false);
       }
      
     }
  
     useEffect( ()=>{
+      console.log("refreshing")
+     
       getData();
-    },[])
+     
+    },[page])
    
     if((token)===undefined||(token)===null){
 

@@ -25,7 +25,12 @@ router.get("",async function(req,res){
     const offset = (page-1)*5;
     
     let stud = await students.find().sort({age:1}).skip(offset).limit(size).lean().exec();
-    res.send(stud);
+    const totalUserCount = await students.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+     
+       
+    return res.send({students:stud,total_pages});
 })
 
 router.get("/sort_student_name",async (req,res)=>{
@@ -34,7 +39,12 @@ router.get("/sort_student_name",async (req,res)=>{
     const offset = (page-1)*5;
     
     let stud = await students.find().sort({name:1}).skip(offset).limit(size).lean().exec();
-    res.send(stud);
+    const totalUserCount = await students.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+     
+       
+    return res.send({students:stud,total_pages});
 })
 
 router.get("/filter_name",async (req,res)=>{
@@ -42,7 +52,12 @@ router.get("/filter_name",async (req,res)=>{
     const size = +req.query.size||5;
     const offset = (page-1)*5;
     const con = await students.find({name:req.query.name}).skip(offset).limit(size).lean().exec();
-    res.send(con);
+    const totalUserCount = await students.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+     
+       
+    return res.send({students:con,total_pages});
 })
 
 
@@ -52,7 +67,12 @@ router.get("/filter_age",async (req,res)=>{
     const offset = (page-1)*5;
     
     const con = await students.find({age:req.query.age}).skip(offset).limit(size).lean().exec();
-    res.send(con);
+    const totalUserCount = await students.find().count();
+    const total_pages=Math.ceil(totalUserCount/size);
+ 
+     
+       
+    return res.send({students:con,total_pages});
 })
 
 
